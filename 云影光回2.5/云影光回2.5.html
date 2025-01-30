@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云影光回</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            background-color: #000;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .sidebar {
+            width: 200px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            position: fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 15px 0;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .header {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100; /* 确保在最顶层 */
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .header img {
+            width: 200px; /* LOGO大小保持不变 */
+            height: auto;
+        }
+        #logo {
+            font-size: 24px; /* 字体大小保持不变 */
+            margin-top: 10px;
+        }
+        .main-content {
+            margin-left: 220px;
+            flex-grow: 1;
+            position: relative;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <video autoplay muted loop>
+            <source src="动态背景.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="header">
+        <img src="logo.png" alt="Logo">
+        <span id="logo">云影光回</span>
+    </div>
+
+    <div class="sidebar">
+        <a onclick="showPopup('intro')">介绍</a>
+        <a onclick="showPopup('video')">视频</a>
+        <a onclick="showPopup('faq')">问答</a>
+        <a onclick="showPopup('contact')">联系方式</a>
+    </div>
+
+    <div class="main-content"></div>
+
+    <div class="overlay" id="overlay" onclick="hidePopup()">
+        <div class="popup" id="popup-content" onclick="event.stopPropagation();">
+        </div>
+    </div>
+
+    <script>
+        function showPopup(type) {
+            let content = "";
+            if (type === "intro") {
+                content = `<h2>公司介绍</h2>
+                    <p>🚀 <strong>云影光回</strong> 是一家专注于 <strong>直播带货录播服务</strong> 的科技型公司，致力于为直播电商行业提供更高效、更稳定的 <strong>“真转”技术</strong> 解决方案。</p>
+                    <p>我们结合 <strong>智能录播技术、数据优化、互动增强</strong> 等创新手段，帮助直播商家 <strong>提升 ROI、优化直播流程</strong>，并在合规范围内实现 <strong>流量放大与收益增长</strong>。</p>
+                    <h3>💡 智能录播与“真转”技术</h3>
+                    <ul>
+                        <li><strong>高度还原真实直播：</strong> 基于真人直播素材，循环播放，区别于传统录播。</li>
+                        <li><strong>精准模拟互动：</strong> 采用智能算法，模拟主播的互动、弹幕、话术，营造真实带货氛围。</li>
+                        <li><strong>区别于传统录播，数据更稳定：</strong> 传统录播容易被平台识别，甚至封号，而“真转”技术高度还原直播数据，安全性更高。</li>
+                    </ul>`;
+            }
+           if (type === "contact") {
+                content = `<h2>联系方式</h2>
+                    <p>电话：13868609544</p>
+                    <p>微信：wxid_xjfr0jwb57yn12</p>
+                    <p>邮箱：747070956@qq.com</p>`;
+            }
+            if (type === "video") {
+    content = `<h2>视频</h2>
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            <video controls width="100%">
+                <source src="字幕.mp4" type="video/mp4">
+                您的浏览器不支持 HTML5 视频标签。
+            </video>
+            <video controls width="100%">
+                <source src="分镜.mp4" type="video/mp4">
+                您的浏览器不支持 HTML5 视频标签。
+            </video>
+        </div>`;
+            }
+            if (type === "faq") {
+                content = `<h2>问答</h2><ul>
+                    <li><strong>问：</strong>你们是做录播吗？“真转”到底是什么意思？跟录播有什么区别？<br><strong>答：</strong>并非普通录播： 我们利用您真人直播的素材循环播放，但不是单纯“录制视频再重复跑”。<br>传统录播局限： 12月前，很多人用手机或盒子录播，平台监管不严；12月后严打，简单录播几乎都被封或警告。<br>“真转”优势： 注重细节还原，包括弹幕、互动、话术等，几乎与真人直播效果一致，因此无论在数据还是安全上都更稳定。</li>
+                    <li><strong>问：</strong>会不会违规被封号？<br><strong>答：</strong>最坏情况仅警告： 相当于直播间话术违规的级别，不会对账号造成实质影响。<br>安全承诺： 如果因此被封号或罚款，我们会代缴罚款；若无法解封，我们提供现金赔偿（合同里会注明），请放心。</li>
+                    <li><strong>问：</strong>能跑多久？有人能连播几天几夜，你们可以吗？<br><strong>答：</strong>渐进式增长：前期：跟您的真人直播时长一致(如2-3小时)，逐步增加时长；<br>半个月到一个月内可扩至12-18小时，保证安全下放大业绩。<br>“废号”极限玩法：有些人连续跑几天几夜，账号基本上就“废”了；如果账号不重要、能换新号，我们也能提供这种高风险高收益模式（需满足一定条件）。</li>
+                    <li><strong>问：</strong>操作复杂吗？由谁来操作？<br><strong>答：</strong>技术执行： 每天切播由我们远程完成；开播前的中控简单准备由您配合操作。<br>全程陪跑： 前期我们会手把手教您，确保顺利上手，操作并不复杂。</li>
+                    <li><strong>问：</strong>是纯无人值守吗？切完就不用管了吗？<br><strong>答：</strong>前期有值守： 当跑时长在8小时以内，需要有人在中控关注账号表现、应对突发情况。<br>后期可放手： 账号稳定后，超过8小时无需一直盯着，我们技术团队远程维护即可。</li>
+                    <li><strong>问：</strong>怎么测试？想先试一场看看效果<br><strong>答：</strong>提前准备： 通常在您正常开播前2-3小时进行环境搭建，需要您配合中控操作；电脑最好Win10、i5 12代以上、显卡≥2060。<br>测试账号：不建议用小号，数据权重不同无法真实验证效果；<br>若主号没用过其他违规系统或插件，也没被判过无人直播违规，即可安全测试。<br>测试结算： 测试时跑出的放大业绩结束后立即按实际签收部分结算，后续合作再按月结算。</li>
+                    <li><strong>问：</strong>具体怎么合作？怎么收费？<br><strong>答：</strong>不收前置费用： 无软件费、设备费及其他杂费。<br>按业绩提成： 您真人直播收入与我们无关；只有通过“真转”技术额外放大的部分，按实际签收业绩抽取提成。<br>合作共赢： 我们保障技术安全与数据放大，您可先测试一场，满意后再继续深化合作。</li>
+                </ul>`;
+            }
+            document.getElementById("popup-content").innerHTML = content;
+            document.getElementById("overlay").style.display = "block";
+        }
+        function hidePopup() {
+            document.getElementById("overlay").style.display = "none";
+        }
+    </script>
+</body>
+</html>
